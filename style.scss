@@ -1,0 +1,24 @@
+.TopSide {
+  ul {
+    display: flex;
+    gap: 5px;
+    li {
+      list-style: none;
+      width: 150px;
+      height: 150px;
+      background-color: gray;
+    }
+  }
+}
+.bottomSide {
+  ul {
+    display: flex;
+    gap: 5px;
+    li {
+      list-style: none;
+      width: 150px;
+      height: 150px;
+      background-color: gray;
+    }
+  }
+}

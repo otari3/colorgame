@@ -1,0 +1,21 @@
+.TopSide ul {
+  display: flex;
+  gap: 5px;
+}
+.TopSide ul li {
+  list-style: none;
+  width: 150px;
+  height: 150px;
+  background-color: gray;
+}
+
+.bottomSide ul {
+  display: flex;
+  gap: 5px;
+}
+.bottomSide ul li {
+  list-style: none;
+  width: 150px;
+  height: 150px;
+  background-color: gray;
+}/*# sourceMappingURL=style.css.map */
