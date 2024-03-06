@@ -7,15 +7,20 @@ let corrcetColor;
 let boxes = document.querySelectorAll(".box");
 let h1 = document.querySelector("h1");
 let body = document.querySelector("body");
+let p = document.querySelector("p");
 
 start.addEventListener("click", () => {
-  //აქ ვამოწმებთ თუ ეზი ლეველია დაყენებული და თუ დაზენებულია მაშინ ქვედა მხარეს ვშლით
   let bottomSide = document.querySelector(".bottomSide");
+  //აქ თუ არის სტარტზე ერთხელ მაინ ხელი დაჭერლი სტაილ ატრიბუტებს ვაშორებთ რომ თავიდან დაიწყოს თამაში
   if (start.classList.contains("startGame")) {
     boxes.forEach((items) => {
       items.removeAttribute("style");
     });
+    p.innerText = "";
+    h1.removeAttribute("style");
   }
+  //აქ ვამოწმებთ თუ ეზი ლეველია დაყენებული და თუ დაზენებულია მაშინ ქვედა მხარეს ვშლით
+  // ბულიანი საჭიროა იმისთვის რომ ბაგი გვქონდა სულ შედიოდა წასლაში როცა წაშლილი იყო და ერორზე გავზავდით
   if (
     start.classList.contains("easylvl") &&
     !start.classList.contains("hardlvl") &&
@@ -49,23 +54,32 @@ start.addEventListener("click", () => {
       li.setAttributeNode(boxClass);
     }
 
-    //აქ ვამატებთ კლასს რომელიც გასტილული გვაქვს უკვე და შევქმენიტ 46 ხაზის კოდზე
-    //შემდეგ ვაშორებთ მარტივი ლეველის კლას რადგან ისევ არ შემოვიდეს ლუპში და დაგვიმატოს 3 ლისტი კიდევ
+    //აქ ვამატებთ კლასს რომელიც გასტილული გვაქვს უკვე და შევქმენიტ 41 ხაზის კოდზე
+    //შემდეგ ვაშორებთ მარტივი ლეველის კლას რადგან ისევ არ შემოვიდეს იფში და დაგვიმატოს 3 ლისტი კიდევ
     div.setAttributeNode(classBottom);
     start.classList.remove("easylvl");
   }
   //ფერებზე მუშაობა
+  // პირველ რისგში ვქმნით მოგებულ ფერს ერთხელ
+
   boxes = document.querySelectorAll(".box");
   let red = Math.round(Math.random() * 255);
   let blue = Math.round(Math.random() * 255);
   let green = Math.round(Math.random() * 255);
   let rgb = `rgb(${red}, ${green}, ${blue})`;
   corrcetColor = rgb;
+  //აქ მასივიდან ვიღებთ ერთ რენდომ ციფრს რომელიც იქნება ჩვენი მოგებული თუ იზია მაშინ 0-2მდე ამოვიღებთ
+  // თუ რთულია მაშინ 0-6
   let randomBox = Math.round(Math.random() * boxes.length - 1);
+  //რადგანაც ლენგსზე გაწერლი გვაქ მინუს ერთი ამიტო თუ მოგებული ციფრი იქნება 0 ისე გადაირმნება -0ში
+  // და უბრალოდ მაგის კონვერტირებას ვახდენთ 76 ლაინით ნეგატიურიდან პოზიტიურ რიცხვზე
   randomBox = Math.abs(randomBox);
+  //მოგებული მასივის რიცხვს ვაძლევთ მოგებულ ფერს
   boxes[randomBox].style.background = corrcetColor;
 
   for (let i = 0; i < boxes.length; i++) {
+    //ამ იფით ვამოწმებთ რო თუ i უდრის მოგებულ ყუთის რიცხვს მაშინ მაგ კონრეტული i დან გამოვიდეს
+    // და შემდეგ იტერეიშენზე დაგავიდეს ამით ჩვენ მოგებულ ყუთს ფერს არ შეუცვლით და მხოლოდ წაგებულებს შევუცვლით
     if (i === randomBox) {
       continue;
     }
@@ -81,8 +95,10 @@ start.addEventListener("click", () => {
 });
 
 hard.addEventListener("click", () => {
+  //აქ მოწმდება საჭიროა თუ არა ყუთების დამატება რადგანაც სულ არ დაამატოს
   if (boxes.length < 6) {
     start.classList.add("hardlvl");
+    p.innerText = "hard";
   }
 });
 //აქ მოწმდება თუ არის მარტივი ლვლ
@@ -93,17 +109,28 @@ easy.addEventListener("click", () => {
     start.classList.add("easylvl");
     start.classList.remove("hardlvl");
     lvliseasy = true;
+    p.innerText = "easy";
   }
 });
+//ამ მონაკვეთში ვიყენებთ ტექნიკას რომელსაც ქვია event deligation-ი
+//რადგანაც დინამიურ დამატებულ ელემენტსებ კლიკ ივენთები სხვანაირად ედება
+// მაგალითად თავიდან 6 ყუთს არეგისტრილებდა ხოლო შემდეგ რო ვაშორებდით და ვამატებთი დინამიურად დამატებულებს აღარ უყურებდა
+// ამისთვის დაგვჭირდა რო კლიკ ივენთი მშობელ ელემენტს დაეჰენდელებია
+//კლიკ ივენთს ვამატებთ ისეთ ელემენტზე რომელიც სულ არსებობს დოკუმენტში
+//შემდეგ event.target.classList.contains ვარკვევთ რომელ ივენთზე ვაჭერთ ხელს
+//ამ შემთხვევაში თუ event.target კლასი აქვს ბოქსი ესეიგი ყუთებზე  გვაქ ხელი დაჭერლი
+// და შემდეგ უკვე ვუწერთ მოგების და წაგების ლოგიკას
 section.addEventListener("click", (event) => {
   if (event.target.classList.contains("box")) {
     if (event.target.style.background === corrcetColor) {
-      alert("you win");
+      p.innerText = "you won";
+      h1.style.color = corrcetColor;
     } else if (
       event.target.style.background !== corrcetColor &&
       start.classList.contains("startGame")
     ) {
       event.target.style.visibility = "hidden";
+      p.innerText = "try again";
     }
   }
 });

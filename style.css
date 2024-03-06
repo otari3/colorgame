@@ -1,3 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .TopSide ul {
   display: flex;
   gap: 5px;
@@ -7,6 +27,7 @@
   width: 150px;
   height: 150px;
   background-color: gray;
+  border-radius: 20px;
 }
 
 .bottomSide ul {
@@ -18,4 +39,33 @@
   width: 150px;
   height: 150px;
   background-color: gray;
+  border-radius: 20px;
+}
+
+header h1 {
+  text-align: center;
+}
+
+.flexingBtn {
+  display: flex;
+  gap: 80px;
+  margin-bottom: 20px;
+}
+.flexingBtn button {
+  border: none;
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+}
+.flexingBtn .easy:focus {
+  background-color: greenyellow;
+}
+.flexingBtn .hard:focus {
+  background-color: red;
+}
+
+p {
+  margin-bottom: 10px;
+  font-size: 30px;
 }/*# sourceMappingURL=style.css.map */
